@@ -13,7 +13,6 @@ sudo rm -rf /var/lib/docker_server/*;
 sudo rm -rf /var/lib/rancher/*;
 sudo rm -rf /var/lib/kubelet/*;
 sudo rm -rf /etc/docker/certs.d/*;
-echo "Deleting docker, local and longhorn storage";
 sudo rm -rf ${docker_store};
 sudo rm -rf ${local_store};
 sudo rm -rf ${longhorn_store};
@@ -27,7 +26,6 @@ sudo rm -rf /run/containerd;
 sudo rm -rf /var/lib/docker;
 sudo rm -rf /var/log/containers;
 sudo rm -rf /var/log/pods;
-echo "Reset iptables to ACCEPT all, then flush and delete all other chains";
 declare -A chains=(
 [filter]=INPUT:FORWARD:OUTPUT
 [raw]=PREROUTING:OUTPUT
