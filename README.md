@@ -1,9 +1,11 @@
-<h3 align="center">CML on ECS Useful Tools</h3>
+## CML on ECS Useful Tools
 
-<h3 align="left">Connect with me:</h3>
-<p align="left">
-</p>
+<p align="left"><img src="https://github.com/dennislee22/ECS/blob/main/cldrlogo.png" alt="c" width="20" height="20"/>check_cmluser_mapping.sh </p>
+* Objective: Run this script in the ECS/OCP master node to check the mapping between CML username and the Kubernetes (OCP/ECS) namespace name provisioned for that particular username of interest. This script can also generate all CML usernames mapping.
 
-<h3 align="left">Scripts</h3>
-<p align="left"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg" alt="c" width="40" height="40"/>check_cmluser_mapping.sh </p>
-<p align="left">Objective: Run this script to check the mapping between CML username and the Kubernetes (OCP/ECS) namespace name provisioned for that particular username of interest. This script can also generate all CML usernames mapping.</p>
+````diff
+# ./check_cmluser_mapping.sh 
+Enter the CML workspace name: cmlws1
+Enter a username or 'all' for all users: illegitimate_user
+The user illegitimate_user is not found in the CML workspace cmlws1.
+```
