@@ -5,7 +5,7 @@
 
 ```diff
 # ./check_cmluser_mapping.sh 
-Enter the CML namespace: cmlws1
+Enter the CML workspace name: cmlws1
 Enter a username or 'all' for all users: dennislee
  username  |   namespace   
 -----------+---------------
