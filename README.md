@@ -10,12 +10,13 @@ Enter a username or 'all' for all users: dennislee
  username  |   namespace   
 -----------+---------------
  dennislee | cmlws1-user-1
-
+```
+```
 # ./check_cmluser_mapping.sh 
 Enter the CML workspace name: cmlws1
 Enter a username or 'all' for all users: illegitimate_user
 The user illegitimate_user is not found in the CML workspace cmlws1.
 ```
-
+<p></p>
 <p align="left"><img src="https://github.com/dennislee22/ECS/blob/main/cldrlogo.png" alt="c" width="20" height="20"/><b>remove_ecs.sh</b></p>
 * Objective: Run this script in each ECS node to remove/uninstall the ECS software. Subsequently, reboot the node.
