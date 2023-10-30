@@ -12,6 +12,7 @@ sudo ./rke2-uninstall.sh;
 sudo rm -rf /var/lib/docker_server/*;
 sudo rm -rf /var/lib/rancher/*;
 sudo rm -rf /var/lib/kubelet/*;
+sudo rm -rf /var/lib/ecs/*;
 sudo rm -rf /etc/docker/certs.d/*;
 sudo rm -rf ${docker_store};
 sudo rm -rf ${local_store};
