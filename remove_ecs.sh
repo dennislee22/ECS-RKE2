@@ -18,7 +18,6 @@ sudo rm -rf ${docker_store};
 sudo rm -rf ${local_store};
 sudo rm -rf ${longhorn_store};
 sudo systemctl stop iscsid;
-#sudo yum -y erase iscsi-initiator-utils;
 sudo rm -rf /var/lib/iscsi;
 sudo rm -rf /etc/cni;
 sudo rm -f /run/longhorn-iscsi.lock;
@@ -27,20 +26,10 @@ sudo rm -rf /run/containerd;
 sudo rm -rf /var/lib/docker;
 sudo rm -rf /var/log/containers;
 sudo rm -rf /var/log/pods;
-declare -A chains=(
-[filter]=INPUT:FORWARD:OUTPUT
-[raw]=PREROUTING:OUTPUT
-[mangle]=PREROUTING:INPUT:FORWARD:OUTPUT:POSTROUTING
-[security]=INPUT:FORWARD:OUTPUT
-[nat]=PREROUTING:INPUT:OUTPUT:POSTROUTING
-)
-for table in "${!chains[@]}"; do
-echo "${chains[$table]}" | tr : $"\n" | while IFS= read -r; do
-sudo iptables -t "$table" -P "$REPLY" ACCEPT
-done
-sudo iptables -t "$table" -F
-sudo iptables -t "$table" -X
-done
+sudo iptables -F;
+sudo iptables -X;
 sudo /usr/sbin/ifconfig docker0 down;
 sudo /usr/sbin/ip link delete docker0;
 sudo rm -rf /etc/sysconfig/iptables;
+echo "Please reboot the node."
+echo "After successful reboot, ensure the iptables list is empty prior to installing ECS."
