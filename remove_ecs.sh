@@ -1,4 +1,6 @@
 #!/bin/bash
+
+# Modify the values of the following parameters as per your environment.
 docker_store='/mnt/docker/*'
 longhorn_store='/ecs/*'
 local_store='/mnt/local-storage/*'
