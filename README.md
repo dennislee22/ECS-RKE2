@@ -20,3 +20,7 @@ The user illegitimate_user is not found in the CML workspace cmlws1.
 <p></p>
 <p align="left"><img src="https://github.com/dennislee22/ECS/blob/main/cldrlogo.png" alt="c" width="20" height="20"/><b>remove_ecs.sh</b></p>
 * Objective: Run this script in each ECS node to remove/uninstall the ECS software. Subsequently, reboot the node.
+
+<p></p>
+<p align="left"><img src="https://github.com/dennislee22/ECS/blob/main/cldrlogo.png" alt="c" width="20" height="20"/><b>pvc_check.sh</b></p>
+* Objective: Run this script at the node (with kubectl command) to identify which pod(s) is/are currently attached to the specific PVC in the particular namespace.
