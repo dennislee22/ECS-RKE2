@@ -1,5 +1,19 @@
 #!/bin/bash
 
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <namespace>"
+    exit 1
+fi
+
+namespace="$1"
+
+# Check if the namespace exists
+if kubectl get namespace "$namespace" > /dev/null 2>&1; then
+    echo "Namespace '$namespace' exists."
+else
+    echo "Warning: Namespace '$namespace' does not exist!"
+fi
+
 res_cpu=$(kubectl -n $1 get pods -o=jsonpath='{.items[*]..resources.requests.cpu}')
 let tot=0
 res_mem=$(kubectl -n $1 get pods -o=jsonpath='{.items[*]..resources.requests.memory}')
