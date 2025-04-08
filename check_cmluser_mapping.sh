@@ -2,18 +2,27 @@
 
 # Function to check if a Kubernetes namespace exists
 namespace_exists() {
-  local namespace="$namespace"
+  local namespace="$1"
   kubectl get namespace "$namespace" &>/dev/null
   return $?
 }
 
-# Function to highlight text in red
-highlight_red() {
-  echo -e "\e[41;97m$namespace\e[0m"
+# Function to execute SQL query
+execute_query() {
+  local query="$1"
+  local namespace="$2"
+  local pod_name="$3"
+
+  kubectl exec -n "$namespace" "$pod_name" -c db -- psql -U postgres -d sense -c "$query"
 }
 
-# Prompt the input for namespace
-read -p "Enter the namespace: " namespace
+# Function to highlight text in red
+highlight_red() {
+  echo -e "\e[41;97m$1\e[0m"
+}
+
+# Prompt the user for the namespace
+read -p "Enter the CML workspace name: " namespace
 
 # Check if the specified namespace exists
 if ! namespace_exists "$namespace"; then
@@ -21,51 +30,27 @@ if ! namespace_exists "$namespace"; then
   exit 1
 fi
 
-res_cpu=$(kubectl -n $namespace get pods -o=jsonpath='{.items[*]..resources.requests.cpu}')
-let tot=0
-res_mem=$(kubectl -n $namespace get pods -o=jsonpath='{.items[*]..resources.requests.memory}')
-let tot_mem=0
-res_pvc=$(kubectl -n $namespace get pvc -o=jsonpath='{.items[*].spec.resources.requests.storage}')
-let tot_pvc=0
+# Prompt the user to select a specific user or all users
+read -p "Enter a username or 'all' for all users: " username
 
-for i in $res_cpu
-do
-if [[ $i =~ "m" ]]; then
-i=$(echo $i | sed 's/[^0-9]*//g')
-tot=$(( tot + i ))
+# Define the PostgreSQL pod name
+pod_name="db-0"
+
+# Initialize SQL statement
+sql_statement=""
+
+if [ "$username" = "all" ]; then
+  sql_statement="SELECT username,namespace FROM users;"
 else
-tot=$(( tot + i*1000 ))
+  sql_statement="SELECT username,namespace FROM users WHERE username = '$username';"
 fi
-done
-echo "Total CPU requests in $(highlight_red "$namespace") ns: $tot m"
 
-for i in $res_mem
-do
-if [[ $i =~ "M" ]] || [[ $i =~ "m" ]]
-then
-i=$(echo $i | sed 's/[^0-9]*//g')
-tot_mem=$(( tot_mem + i ))
+# Execute the SQL query
+query_result=$(execute_query "$sql_statement" "$namespace" "$pod_name")
+
+# Check if user not found
+if [[ $query_result == *"0 rows"* ]]; then
+  echo "The user $(highlight_red "$username") is not found in the CML workspace $namespace."
 else
-i=$(echo $i | sed 's/[^0-9]*//g')
-tot_mem=$(( tot_mem + i*1000 ))
+  echo "$query_result"
 fi
-done
-echo "Total Memory requests in $(highlight_red "$namespace") ns: $tot_mem MiB"
-
-for i in $res_pvc
-do
-if [[ $i =~ "G" ]] || [[ $i =~ "g" ]]
-then
-i=$(echo $i | sed 's/[^0-9]*//g')
-tot_pvc=$(( tot_pvc + i ))
-elif [[ $i =~ "M" ]] || [[ $i =~ "m" ]]
-then
-i=$(echo $i | sed 's/[^0-9]*//g')
-tot_pvc=$(( tot_pvc + i/1000 ))
-else
-i=$(echo $i | sed 's/[^0-9]*//g')
-tot_pvc=$(( tot_pvc + i*1000 ))
-fi
-done
-
-echo "Sum of PVC requests in $(highlight_red "$namespace") ns: $tot_pvc GiB"
