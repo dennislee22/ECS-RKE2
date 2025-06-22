@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker_store='/mnt/docker'
+docker_store='/mnt/docker/*'
 longhorn_store='/ecs/longhorn'
 local_store='/ecs/cdw'
 
@@ -11,11 +11,12 @@ local_store='/ecs/cdw'
 #cd /opt/cloudera/parcels/ECS/bin
 #sudo ./rke2-uninstall.sh
 
+sudo rm -rf /ecs/docker # embedded docker registry 
 sudo rm -rf \
-    /var/lib/docker_server/* \
-    /var/lib/rancher/* \
-    /var/lib/kubelet/* \
-    /var/lib/ecs/* \
+    /var/lib/docker_server \
+    /var/lib/rancher \
+    /var/lib/kubelet \
+    /var/lib/ecs \
     /etc/docker/certs.d/* \
     "${docker_store}" \
     "${local_store}" \
@@ -30,9 +31,13 @@ sudo rm -rf \
     /var/log/pods
 
 sudo systemctl stop iscsid || true
+
 sudo iptables -F
 sudo iptables -X
+
 sudo ip link delete docker0 || true
+
 sudo rm -rf /etc/sysconfig/iptables
+
 echo "Please reboot the node."
 echo "After successful reboot, ensure the iptables list is empty prior to installing ECS."
