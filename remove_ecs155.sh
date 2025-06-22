@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker_store='/mnt/docker/*'
+docker_store='/mnt/docker'
 longhorn_store='/ecs/longhorn'
 local_store='/ecs/cdw'
 
