@@ -1,7 +1,7 @@
 ## Data Services on ECS/RKE2 Tools
 
 <p align="left"><img src="https://github.com/dennislee22/ECS/blob/main/cldrlogo.png" alt="c" width="20" height="20"/><b>check_cmluser_mapping.sh</b></p>
-* Objective: Run this script in the ECS master node to check the mapping between CML username and the Kubernetes (ECS) namespace name provisioned for that particular username of interest. This script can also generate all CML usernames' mapping.
+* Run this script in the ECS master node to check the mapping between CML username and the Kubernetes (ECS) namespace name provisioned for that particular username of interest. This script can also generate all CML usernames' mapping.
 
 ```diff
 # ./check_cmluser_mapping.sh 
@@ -19,8 +19,12 @@ The user illegitimate_user is not found in the CML workspace cmlws1.
 ```
 <p></p>
 <p align="left"><img src="https://github.com/dennislee22/ECS/blob/main/cldrlogo.png" alt="c" width="20" height="20"/><b>remove_ecs.sh</b></p>
-* Objective: Run this script in each ECS node to remove/uninstall the ECS software. Subsequently, reboot the node.
+* Run this script in each ECS node to remove/uninstall the ECS software. Subsequently, reboot the node.
 
 <p></p>
 <p align="left"><img src="https://github.com/dennislee22/ECS/blob/main/cldrlogo.png" alt="c" width="20" height="20"/><b>pvc_check.sh</b></p>
-* Objective: Run this script at the node (with kubectl command) to identify which pod(s) is/are currently attached to the specific PVC in the particular namespace.
+* Run this script at the node (with kubectl command) to identify which pod(s) is/are currently attached to the specific PVC in the particular namespace.
+
+<p></p>
+<p align="left"><img src="https://github.com/dennislee22/ECS/blob/main/cldrlogo.png" alt="c" width="20" height="20"/><b>check-node.sh</b></p>
+* Run this script to report the total allocatable resources, the resources requested by pods, and the remaining balance that can be requested.
