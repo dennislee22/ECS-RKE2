@@ -32,4 +32,4 @@ The user illegitimate_user is not found in the CML workspace cmlws1.
 
 <p></p>
 <p align="left"><img src="https://github.com/dennislee22/ECS/blob/main/cldrlogo.png" alt="c" width="20" height="20"/><b>check-gpu.sh</b></p>
-* Run this script checks for nodes with NVIDIA GPUs in a Kubernetes cluster and lists the pods that are requesting those GPU resources.
+* Run this script to check for nodes with `nvidia.com/gpu` in a Kubernetes cluster and lists the pods that are requesting those GPU resources.
